@@ -9,7 +9,7 @@ shelljs_1.default.config.silent = true;
 function initializer(projectName) {
     shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
     shelljs_1.default.cd(`${projectName}`);
-    shelljs_1.default.exec(`echo ${packagejsString(projectName)} > package.json`);
+    shelljs_1.default.exec(`echo "${packagejsString(projectName)}" > package.json`);
     logger_1.default.info("packge.json has created");
     if (shelljs_1.default.which('yarn')) {
         logger_1.default.info("Install package started! with yarn");
