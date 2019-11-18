@@ -4,17 +4,21 @@ function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
   shell.cd(`${projectName}`)
   shell.echo(packagejsString(projectName)).to(`./package.json`)
+  if (shell.which('yarn')) {
+    shell.exec("yarn")
+  }
+  else {
+    shell.echo("yarn not found")
+    shell.exec("npm i")
+  }
 }
 
 const packagejsString = (projectName: string) =>
-`{
+  `{
   "name": "${projectName}",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A starting point for Node.js express apps with TypeScript",
   "license": "MIT",
-  "bin": {
-    "tx": "./dist/bin/index.js"
-  },
   "scripts": {
     "build": "tsc",
     "start": "tsc -w | nodemon dist/server.js"
@@ -40,7 +44,7 @@ const packagejsString = (projectName: string) =>
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "compression": "^1.7.4",
-    "helmet": "^3.20.0",
+    "helmet": "^3.20.0"
   }
 }
 `

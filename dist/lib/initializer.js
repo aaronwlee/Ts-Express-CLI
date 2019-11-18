@@ -8,15 +8,19 @@ function initializer(projectName) {
     shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
     shelljs_1.default.cd(`${projectName}`);
     shelljs_1.default.echo(packagejsString(projectName)).to(`./package.json`);
+    if (shelljs_1.default.which('yarn')) {
+        shelljs_1.default.exec("yarn");
+    }
+    else {
+        shelljs_1.default.echo("yarn not found");
+        shelljs_1.default.exec("npm i");
+    }
 }
 const packagejsString = (projectName) => `{
   "name": "${projectName}",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A starting point for Node.js express apps with TypeScript",
   "license": "MIT",
-  "bin": {
-    "tx": "./dist/bin/index.js"
-  },
   "scripts": {
     "build": "tsc",
     "start": "tsc -w | nodemon dist/server.js"
@@ -42,7 +46,7 @@ const packagejsString = (projectName) => `{
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "compression": "^1.7.4",
-    "helmet": "^3.20.0",
+    "helmet": "^3.20.0"
   }
 }
 `;
