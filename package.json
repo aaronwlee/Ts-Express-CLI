@@ -1,0 +1,28 @@
+{
+  "name": "ts-express-cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "typescript based express command line interface",
+  "author": "Aaron Wooseok Lee",
+  "bin": {
+    "tx": "./dist/bin/index.js"
+  },
+  "scripts": {
+    "tx": "node ./dist/bin/index.js"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^6.5.0",
+    "@types/shelljs": "^0.8.6",
+    "@types/node": "^12.12.8",
+    "ts-node": "^8.5.0",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.7.2"
+  },
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "commander": "^4.0.1",
+    "inquirer": "^7.0.0",
+    "shelljs": "^0.8.3"
+  }
+}
