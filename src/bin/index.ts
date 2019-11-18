@@ -2,9 +2,9 @@
 
 import program from 'commander'
 import chalk from 'chalk';
-import shell from 'shelljs'
 import inquirer from 'inquirer'
 import compare from '../utils/typeValidator'
+import initializer from '../lib/initializer';
 
 const info = chalk.cyan
 const warn = chalk.red
@@ -27,6 +27,7 @@ program
             })
 
             log(info("project will be created at"), warn(`${process.cwd()}/${projectName}`), info(`with ${answer.projectType} type`))
+            initializer(projectName);
         } catch (err) {
             log(error("error!", err))
         }

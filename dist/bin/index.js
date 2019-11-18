@@ -17,6 +17,7 @@ const commander_1 = __importDefault(require("commander"));
 const chalk_1 = __importDefault(require("chalk"));
 const inquirer_1 = __importDefault(require("inquirer"));
 const typeValidator_1 = __importDefault(require("../utils/typeValidator"));
+const initializer_1 = __importDefault(require("../lib/initializer"));
 const info = chalk_1.default.cyan;
 const warn = chalk_1.default.red;
 const error = chalk_1.default.bgRed;
@@ -35,6 +36,7 @@ commander_1.default
             choices: ["Stateless", "Stateful"]
         });
         log(info("project will be created at"), warn(`${process.cwd()}/${projectName}`), info(`with ${answer.projectType} type`));
+        initializer_1.default(projectName);
     }
     catch (err) {
         log(error("error!", err));
