@@ -14,14 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const commander_1 = __importDefault(require("commander"));
-const chalk_1 = __importDefault(require("chalk"));
 const inquirer_1 = __importDefault(require("inquirer"));
 const typeValidator_1 = __importDefault(require("../utils/typeValidator"));
 const initializer_1 = __importDefault(require("../lib/initializer"));
-const info = chalk_1.default.cyan;
-const warn = chalk_1.default.red;
-const error = chalk_1.default.bgRed;
-const log = console.log;
+const logger_1 = __importDefault(require("../utils/logger"));
 commander_1.default.version('0.0.1');
 commander_1.default
     .command('init')
@@ -35,11 +31,11 @@ commander_1.default
             message: "Select state type",
             choices: ["Stateless", "Stateful"]
         });
-        log(info("project will be created at"), warn(`${process.cwd()}/${projectName}`), info(`with ${answer.projectType} type`));
+        logger_1.default.info("project will be created at", `${process.cwd()}/${projectName}`, `with ${answer.projectType} type`);
         initializer_1.default(projectName);
     }
     catch (err) {
-        log(error("error!", err));
+        logger_1.default.error(err);
     }
 }));
 commander_1.default
@@ -49,11 +45,11 @@ commander_1.default
     .action((type, name) => {
     const verifiedType = typeValidator_1.default(type);
     if (verifiedType) {
-        log(info("type ="), warn(verifiedType), info("name ="), warn(name));
-        log(info("my path ="), __dirname, info("your path ="), process.cwd());
+        logger_1.default.info("type = ", verifiedType, "name = ", name);
+        logger_1.default.info("my path = ", __dirname, "your path = ", process.cwd());
     }
     else {
-        log(error("the type must be one of the controller, model, mutation and service"));
+        logger_1.default.error("the type must be one of the controller, model, mutation and service");
     }
 });
 commander_1.default.parse(process.argv);

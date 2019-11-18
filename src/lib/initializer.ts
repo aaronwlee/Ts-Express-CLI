@@ -1,16 +1,23 @@
 import shell from 'shelljs'
+import logger from '../utils/logger';
+shell.config.silent = true;
 
 function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
   shell.cd(`${projectName}`)
   shell.echo(packagejsString(projectName)).to(`./package.json`)
+  logger.info("packge.json has created")
+
   if (shell.which('yarn')) {
+    logger.info("Install package started! with yarn")
     shell.exec("yarn")
   }
   else {
-    shell.echo("yarn not found")
+    logger.warn("Yarn not found...")
+    logger.info("Install package started! with npm")
     shell.exec("npm i")
   }
+  logger.info(`done! cd ./${projectName}`)
 }
 
 const packagejsString = (projectName: string) =>

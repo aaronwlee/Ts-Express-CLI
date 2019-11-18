@@ -4,17 +4,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const shelljs_1 = __importDefault(require("shelljs"));
+const logger_1 = __importDefault(require("../utils/logger"));
+shelljs_1.default.config.silent = true;
 function initializer(projectName) {
     shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
     shelljs_1.default.cd(`${projectName}`);
     shelljs_1.default.echo(packagejsString(projectName)).to(`./package.json`);
+    logger_1.default.info("packge.json has created");
     if (shelljs_1.default.which('yarn')) {
+        logger_1.default.info("Install package started! with yarn");
         shelljs_1.default.exec("yarn");
     }
     else {
-        shelljs_1.default.echo("yarn not found");
+        logger_1.default.warn("Yarn not found...");
+        logger_1.default.info("Install package started! with npm");
         shelljs_1.default.exec("npm i");
     }
+    logger_1.default.info(`done! cd ./${projectName}`);
 }
 const packagejsString = (projectName) => `{
   "name": "${projectName}",

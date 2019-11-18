@@ -1,15 +1,10 @@
 #!/usr/bin/env node
 
 import program from 'commander'
-import chalk from 'chalk';
 import inquirer from 'inquirer'
 import compare from '../utils/typeValidator'
 import initializer from '../lib/initializer';
-
-const info = chalk.cyan
-const warn = chalk.red
-const error = chalk.bgRed
-const log = console.log
+import logger from '../utils/logger';
 
 program.version('0.0.1')
 
@@ -26,10 +21,10 @@ program
                 choices: ["Stateless", "Stateful"]
             })
 
-            log(info("project will be created at"), warn(`${process.cwd()}/${projectName}`), info(`with ${answer.projectType} type`))
+            logger.info("project will be created at", `${process.cwd()}/${projectName}`, `with ${answer.projectType} type`)
             initializer(projectName);
         } catch (err) {
-            log(error("error!", err))
+            logger.error(err)
         }
     });
 
@@ -40,10 +35,10 @@ program
     .action((type, name) => {
         const verifiedType = compare(type);
         if (verifiedType) {
-            log(info("type ="), warn(verifiedType), info("name ="), warn(name));
-            log(info("my path ="), __dirname, info("your path ="), process.cwd())
+            logger.info("type = ", verifiedType, "name = ", name)
+            logger.info("my path = ", __dirname, "your path = ", process.cwd())
         } else {
-            log(error("the type must be one of the controller, model, mutation and service"))
+            logger.error("the type must be one of the controller, model, mutation and service")
         }
     });
 
