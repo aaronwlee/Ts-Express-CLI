@@ -5,7 +5,7 @@ shell.config.silent = true;
 function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
   shell.cd(`${projectName}`)
-  shell.echo(packagejsString(projectName)).to(`./package.json`)
+  shell.exec(`echo ${packagejsString(projectName)} > package.json`)
   logger.info("packge.json has created")
 
   if (shell.which('yarn')) {
