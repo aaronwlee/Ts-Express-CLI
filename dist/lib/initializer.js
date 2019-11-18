@@ -7,7 +7,7 @@ const shelljs_1 = __importDefault(require("shelljs"));
 function initializer(projectName) {
     shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
     shelljs_1.default.cd(`${projectName}`);
-    shelljs_1.default.echo(packagejsString(projectName)).to(`${process.cwd()}/${projectName}/package.json`);
+    shelljs_1.default.echo(packagejsString(projectName)).to(`./package.json`);
 }
 const packagejsString = (projectName) => `{
   "name": "${projectName}",

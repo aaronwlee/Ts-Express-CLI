@@ -3,7 +3,7 @@ import shell from 'shelljs'
 function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
   shell.cd(`${projectName}`)
-  shell.echo(packagejsString(projectName)).to(`${process.cwd()}/${projectName}/package.json`)
+  shell.echo(packagejsString(projectName)).to(`./package.json`)
 }
 
 const packagejsString = (projectName: string) =>
