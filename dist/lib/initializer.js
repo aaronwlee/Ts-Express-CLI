@@ -9,8 +9,13 @@ shelljs_1.default.config.silent = true;
 function initializer(projectName) {
     shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
     shelljs_1.default.cd(`${projectName}`);
-    shelljs_1.default.exec(`echo "${packagejsString(projectName)}" > package.json`);
+    shelljs_1.default.echo(packagejsString(projectName)).to(`./package.json`);
+    shelljs_1.default.exec("clear");
     logger_1.default.info("packge.json has created");
+    shelljs_1.default.echo(tsconfigString).to("./tsconfig.json");
+    shelljs_1.default.echo(eslintrcString).to("./.eslintrc");
+    shelljs_1.default.exec("clear");
+    logger_1.default.info("tsconfig.json has created");
     if (shelljs_1.default.which('yarn')) {
         logger_1.default.info("Install package started! with yarn");
         shelljs_1.default.exec("yarn");
@@ -20,6 +25,8 @@ function initializer(projectName) {
         logger_1.default.info("Install package started! with npm");
         shelljs_1.default.exec("npm i");
     }
+    shelljs_1.default.exec("git init");
+    shelljs_1.default.exec(`git add . | git commit -am "initialized by ts-express-cli"`);
     logger_1.default.info(`done! cd ./${projectName}`);
 }
 const packagejsString = (projectName) => `{
@@ -53,6 +60,44 @@ const packagejsString = (projectName) => `{
     "dotenv": "^8.0.0",
     "compression": "^1.7.4",
     "helmet": "^3.20.0"
+  }
+}
+`;
+const tsconfigString = `{
+  "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "declaration": true,
+      "target": "es6",
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist",
+      "baseUrl": ".",
+      "paths": {
+          "*": [
+              "node_modules/*"
+          ]
+      }
+  },
+  "include": [
+      "src/**/*"
+  ]
+}
+`;
+const eslintrcString = `{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }
 `;

@@ -5,8 +5,14 @@ shell.config.silent = true;
 function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
   shell.cd(`${projectName}`)
-  shell.exec(`echo "${packagejsString(projectName)}" > package.json`)
+  shell.echo(packagejsString(projectName)).to(`./package.json`)
+  shell.exec("clear")
   logger.info("packge.json has created")
+
+  shell.echo(tsconfigString).to("./tsconfig.json")
+  shell.echo(eslintrcString).to("./.eslintrc")
+  shell.exec("clear")
+  logger.info("tsconfig.json has created")
 
   if (shell.which('yarn')) {
     logger.info("Install package started! with yarn")
@@ -17,6 +23,9 @@ function initializer(projectName: string) {
     logger.info("Install package started! with npm")
     shell.exec("npm i")
   }
+
+  shell.exec("git init")
+  shell.exec(`git add . | git commit -am "initialized by ts-express-cli"`)
   logger.info(`done! cd ./${projectName}`)
 }
 
@@ -52,6 +61,48 @@ const packagejsString = (projectName: string) =>
     "dotenv": "^8.0.0",
     "compression": "^1.7.4",
     "helmet": "^3.20.0"
+  }
+}
+`
+
+const tsconfigString =
+`{
+  "compilerOptions": {
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
+      "declaration": true,
+      "target": "es6",
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist",
+      "baseUrl": ".",
+      "paths": {
+          "*": [
+              "node_modules/*"
+          ]
+      }
+  },
+  "include": [
+      "src/**/*"
+  ]
+}
+`
+
+const eslintrcString = 
+`{
+  "parser": "@typescript-eslint/parser",
+  "extends": ["plugin:@typescript-eslint/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }
 `
