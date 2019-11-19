@@ -2,7 +2,7 @@ import { Spinner } from 'cli-spinner'
 import { spawn } from 'child_process'
 
 const spinner = new Spinner({
-    text: 'Processing... %s',
+    text: '%s  Processing...   ',
     stream: process.stderr,
     onTick: function (msg) {
         this.clearLine(this.stream);

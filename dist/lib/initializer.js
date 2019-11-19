@@ -16,6 +16,7 @@ const shelljs_1 = __importDefault(require("shelljs"));
 const logger_1 = __importDefault(require("../utils/logger"));
 const spinner_1 = __importDefault(require("../utils/spinner"));
 const fs_1 = __importDefault(require("fs"));
+shelljs_1.default.config.silent = true;
 function initializer(projectName) {
     return __awaiter(this, void 0, void 0, function* () {
         shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);

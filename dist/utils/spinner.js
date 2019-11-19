@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cli_spinner_1 = require("cli-spinner");
 const child_process_1 = require("child_process");
 const spinner = new cli_spinner_1.Spinner({
-    text: 'Processing... %s',
+    text: '%s  Processing...   ',
     stream: process.stderr,
     onTick: function (msg) {
         this.clearLine(this.stream);
