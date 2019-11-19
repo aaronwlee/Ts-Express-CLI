@@ -35,6 +35,7 @@ function initializer(projectName) {
             logger_1.default.info("Install package started! with npm");
             yield spinner_1.default("npm install", () => logger_1.default.info("node modules installed! 👍"));
         }
+        fs_1.default.writeFileSync('./.gitignore', gitignore);
         shelljs_1.default.exec('git init');
         shelljs_1.default.exec("git add .");
         shelljs_1.default.exec('git commit -m "initialized by ts-express-cli"');
@@ -97,6 +98,12 @@ const tsconfigString = `{
       "src/**/*"
   ]
 }
+`;
+const gitignore = `
+node_modules
+
+yarn-error.log
+.eslintrc
 `;
 const eslintrcString = `{
   "parser": "@typescript-eslint/parser",

@@ -24,6 +24,7 @@ async function initializer(projectName: string) {
     await waitCommand("npm install", () => logger.info("node modules installed! 👍"))
   }
 
+  fs.writeFileSync('./.gitignore', gitignore);
   shell.exec('git init');
   shell.exec("git add .");
   shell.exec('git commit -m "initialized by ts-express-cli"');
@@ -89,6 +90,14 @@ const tsconfigString =
       "src/**/*"
   ]
 }
+`
+
+const gitignore =
+  `
+node_modules
+
+yarn-error.log
+.eslintrc
 `
 
 const eslintrcString =
