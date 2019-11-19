@@ -2,7 +2,6 @@ import shell from 'shelljs'
 import logger from '../utils/logger';
 import waitCommand from '../utils/spinner'
 import fs from 'fs';
-shell.config.silent = true;
 
 async function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
