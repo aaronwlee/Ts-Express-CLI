@@ -7,7 +7,7 @@ const cli_spinner_1 = require("cli-spinner");
 const child_process_1 = require("child_process");
 const node_emoji_1 = __importDefault(require("node-emoji"));
 const spinner = new cli_spinner_1.Spinner({
-    text: `%s  Processing...   ${node_emoji_1.default.get('rocket')}`,
+    text: `%s  Processing...${node_emoji_1.default.get('rocket')}   `,
     stream: process.stderr,
     onTick: function (msg) {
         this.clearLine(this.stream);
