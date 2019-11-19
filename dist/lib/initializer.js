@@ -23,25 +23,25 @@ function initializer(projectName) {
         shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
         shelljs_1.default.cd(`${projectName}`);
         fs_1.default.writeFileSync(`./package.json`, packagejsString(projectName));
-        logger_1.default.info("packge.json has created", node_emoji_1.default.random());
+        logger_1.default.info("packge.json has created", node_emoji_1.default.random().emoji);
         fs_1.default.writeFileSync(`./tsconfig.json`, tsconfigString);
         fs_1.default.writeFileSync(`./.eslintrc`, eslintrcString);
-        logger_1.default.info("tsconfig.json has created", node_emoji_1.default.random());
+        logger_1.default.info("tsconfig.json has created", node_emoji_1.default.random().emoji);
         if (shelljs_1.default.which('yarn')) {
             logger_1.default.info("Install package started! with yarn");
-            yield spinner_1.default("yarn", () => logger_1.default.info(`node modules installed! ${node_emoji_1.default.emojify(':thumbsup')}`));
+            yield spinner_1.default("yarn", () => logger_1.default.info(`node modules installed! ${node_emoji_1.default.get('thumbsup')}`));
             shelljs_1.default.exec("yarn");
         }
         else {
             logger_1.default.warn("Yarn not found...");
             logger_1.default.info("Install package started! with npm");
-            yield spinner_1.default("npm install", () => logger_1.default.info(`node modules installed! ${node_emoji_1.default.emojify(':thumbsup')}`));
+            yield spinner_1.default("npm install", () => logger_1.default.info(`node modules installed! ${node_emoji_1.default.get('thumbsup')}`));
         }
         fs_1.default.writeFileSync('./.gitignore', gitignore);
         shelljs_1.default.exec('git init');
         shelljs_1.default.exec("git add .");
         shelljs_1.default.exec('git commit -m "initialized by ts-express-cli"');
-        logger_1.default.info(`done! cd ./${projectName} `, node_emoji_1.default.random());
+        logger_1.default.info(`done! cd ./${projectName} `, node_emoji_1.default.random().emoji);
     });
 }
 const packagejsString = (projectName) => `{

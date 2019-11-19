@@ -3,7 +3,7 @@ import { spawn } from 'child_process'
 import emoji from 'node-emoji';
 
 const spinner = new Spinner({
-    text: `%s  Processing...   ${emoji.emojify(':rocket')}`,
+    text: `%s  Processing...   ${emoji.get('rocket')}`,
     stream: process.stderr,
     onTick: function (msg) {
         this.clearLine(this.stream);
