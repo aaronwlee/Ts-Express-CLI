@@ -1,35 +1,37 @@
 import shell from 'shelljs'
+import emoji from 'node-emoji'
 import logger from '../utils/logger';
 import waitCommand from '../utils/spinner'
 import fs from 'fs';
+
 shell.config.silent = true;
 
 async function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
   shell.cd(`${projectName}`)
   fs.writeFileSync(`./package.json`, packagejsString(projectName))
-  logger.info("packge.json has created")
+  logger.info("packge.json has created", emoji.random())
 
   fs.writeFileSync(`./tsconfig.json`, tsconfigString)
   fs.writeFileSync(`./.eslintrc`, eslintrcString)
-  logger.info("tsconfig.json has created")
+  logger.info("tsconfig.json has created", emoji.random())
 
   if (shell.which('yarn')) {
     logger.info("Install package started! with yarn")
-    await waitCommand("yarn", () => logger.info("node modules installed! 👍"))
+    await waitCommand("yarn", () => logger.info(`node modules installed! ${emoji.emojify(':thumbsup')}`))
     shell.exec("yarn")
   }
   else {
     logger.warn("Yarn not found...")
     logger.info("Install package started! with npm")
-    await waitCommand("npm install", () => logger.info("node modules installed! 👍"))
+    await waitCommand("npm install", () => logger.info(`node modules installed! ${emoji.emojify(':thumbsup')}`))
   }
 
   fs.writeFileSync('./.gitignore', gitignore);
   shell.exec('git init');
   shell.exec("git add .");
   shell.exec('git commit -m "initialized by ts-express-cli"');
-  logger.info(`done! cd ./${projectName}`)
+  logger.info(`done! cd ./${projectName} `, emoji.random())
 }
 
 const packagejsString = (projectName: string) =>

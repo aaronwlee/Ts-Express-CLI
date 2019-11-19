@@ -1,8 +1,9 @@
 import { Spinner } from 'cli-spinner'
 import { spawn } from 'child_process'
+import emoji from 'node-emoji';
 
 const spinner = new Spinner({
-    text: '%s  Processing...   ',
+    text: `%s  Processing...   ${emoji.emojify(':rocket')}`,
     stream: process.stderr,
     onTick: function (msg) {
         this.clearLine(this.stream);
@@ -10,7 +11,7 @@ const spinner = new Spinner({
     }
 });
 spinner.setSpinnerString(19);
-spinner.setSpinnerDelay(200);
+spinner.setSpinnerDelay(500);
 
 const waitCommand = (command: any, onSuccess: any) => {
     return new Promise((resolve, reject) => {
@@ -18,7 +19,6 @@ const waitCommand = (command: any, onSuccess: any) => {
         spinner.start();
         process.on('exit', () => {
             spinner.stop();
-            console.log('\n')
             onSuccess();
             resolve();
         })
