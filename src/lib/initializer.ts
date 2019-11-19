@@ -24,8 +24,7 @@ async function initializer(projectName: string) {
     await waitCommand("npm install", () => logger.info("node modules installed! 👍"))
   }
 
-  shell.exec("git init")
-  shell.exec(`git add . | git commit -am "initialized by ts-express-cli"`)
+  shell.exec('git init | git add . | git commit -m "initialized by ts-express-cli"')
   logger.info(`done! cd ./${projectName}`)
 }
 

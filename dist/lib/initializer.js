@@ -35,8 +35,7 @@ function initializer(projectName) {
             logger_1.default.info("Install package started! with npm");
             yield spinner_1.default("npm install", () => logger_1.default.info("node modules installed! 👍"));
         }
-        shelljs_1.default.exec("git init");
-        shelljs_1.default.exec(`git add . | git commit -am "initialized by ts-express-cli"`);
+        shelljs_1.default.exec('git init | git add . | git commit -m "initialized by ts-express-cli"');
         logger_1.default.info(`done! cd ./${projectName}`);
     });
 }
