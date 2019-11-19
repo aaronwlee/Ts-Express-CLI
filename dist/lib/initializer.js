@@ -1,33 +1,45 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const shelljs_1 = __importDefault(require("shelljs"));
 const logger_1 = __importDefault(require("../utils/logger"));
+const spinner_1 = __importDefault(require("../utils/spinner"));
+const fs_1 = __importDefault(require("fs"));
 shelljs_1.default.config.silent = true;
 function initializer(projectName) {
-    shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
-    shelljs_1.default.cd(`${projectName}`);
-    shelljs_1.default.echo(packagejsString(projectName)).to(`./package.json`);
-    shelljs_1.default.exec("clear");
-    logger_1.default.info("packge.json has created");
-    shelljs_1.default.echo(tsconfigString).to("./tsconfig.json");
-    shelljs_1.default.echo(eslintrcString).to("./.eslintrc");
-    shelljs_1.default.exec("clear");
-    logger_1.default.info("tsconfig.json has created");
-    if (shelljs_1.default.which('yarn')) {
-        logger_1.default.info("Install package started! with yarn");
-        shelljs_1.default.exec("yarn");
-    }
-    else {
-        logger_1.default.warn("Yarn not found...");
-        logger_1.default.info("Install package started! with npm");
-        shelljs_1.default.exec("npm i");
-    }
-    shelljs_1.default.exec("git init");
-    shelljs_1.default.exec(`git add . | git commit -am "initialized by ts-express-cli"`);
-    logger_1.default.info(`done! cd ./${projectName}`);
+    return __awaiter(this, void 0, void 0, function* () {
+        shelljs_1.default.mkdir(`${process.cwd()}/${projectName}`);
+        shelljs_1.default.cd(`${projectName}`);
+        fs_1.default.writeFileSync(`./package.json`, packagejsString(projectName));
+        logger_1.default.info("packge.json has created");
+        fs_1.default.writeFileSync(`./tsconfig.json`, tsconfigString);
+        fs_1.default.writeFileSync(`./.eslintrc`, eslintrcString);
+        logger_1.default.info("tsconfig.json has created");
+        if (shelljs_1.default.which('yarn')) {
+            logger_1.default.info("Install package started! with yarn");
+            yield spinner_1.default("yarn", () => logger_1.default.info("node modules installed! 👍"));
+            shelljs_1.default.exec("yarn");
+        }
+        else {
+            logger_1.default.warn("Yarn not found...");
+            logger_1.default.info("Install package started! with npm");
+            yield spinner_1.default("npm install", () => logger_1.default.info("node modules installed! 👍"));
+        }
+        shelljs_1.default.exec("git init");
+        shelljs_1.default.exec(`git add . | git commit -am "initialized by ts-express-cli"`);
+        logger_1.default.info(`done! cd ./${projectName}`);
+    });
 }
 const packagejsString = (projectName) => `{
   "name": "${projectName}",

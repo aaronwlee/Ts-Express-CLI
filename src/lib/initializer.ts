@@ -1,27 +1,28 @@
 import shell from 'shelljs'
 import logger from '../utils/logger';
+import waitCommand from '../utils/spinner'
+import fs from 'fs';
 shell.config.silent = true;
 
-function initializer(projectName: string) {
+async function initializer(projectName: string) {
   shell.mkdir(`${process.cwd()}/${projectName}`)
   shell.cd(`${projectName}`)
-  shell.echo(packagejsString(projectName)).to(`./package.json`)
-  shell.exec("clear")
+  fs.writeFileSync(`./package.json`, packagejsString(projectName))
   logger.info("packge.json has created")
 
-  shell.echo(tsconfigString).to("./tsconfig.json")
-  shell.echo(eslintrcString).to("./.eslintrc")
-  shell.exec("clear")
+  fs.writeFileSync(`./tsconfig.json`, tsconfigString)
+  fs.writeFileSync(`./.eslintrc`, eslintrcString)
   logger.info("tsconfig.json has created")
 
   if (shell.which('yarn')) {
     logger.info("Install package started! with yarn")
+    await waitCommand("yarn", () => logger.info("node modules installed! 👍"))
     shell.exec("yarn")
   }
   else {
     logger.warn("Yarn not found...")
     logger.info("Install package started! with npm")
-    shell.exec("npm i")
+    await waitCommand("npm install", () => logger.info("node modules installed! 👍"))
   }
 
   shell.exec("git init")
@@ -66,7 +67,7 @@ const packagejsString = (projectName: string) =>
 `
 
 const tsconfigString =
-`{
+  `{
   "compilerOptions": {
       "module": "commonjs",
       "esModuleInterop": true,
@@ -90,8 +91,8 @@ const tsconfigString =
 }
 `
 
-const eslintrcString = 
-`{
+const eslintrcString =
+  `{
   "parser": "@typescript-eslint/parser",
   "extends": ["plugin:@typescript-eslint/recommended"],
   "parserOptions": {

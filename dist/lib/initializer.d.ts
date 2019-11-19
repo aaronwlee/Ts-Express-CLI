@@ -1,2 +1,2 @@
-declare function initializer(projectName: string): void;
+declare function initializer(projectName: string): Promise<void>;
 export default initializer;
