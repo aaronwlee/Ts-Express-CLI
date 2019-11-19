@@ -5,6 +5,7 @@ import inquirer from 'inquirer'
 import compare from '../utils/typeValidator'
 import initializer from '../lib/initializer';
 import logger from '../utils/logger';
+import path from 'path';
 
 program.version('0.0.1')
 
@@ -21,7 +22,7 @@ program
                 choices: ["Stateless", "Stateful"]
             })
 
-            logger.info("project will be created at", `${process.cwd()}/${projectName}`, `with ${answer.projectType} type`)
+            logger.info("project will be created at", `${path.join(process.cwd(), projectName)}`, `with ${answer.projectType} type`)
             initializer(projectName);
         } catch (err) {
             logger.error(err)

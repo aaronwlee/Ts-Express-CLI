@@ -18,6 +18,7 @@ const inquirer_1 = __importDefault(require("inquirer"));
 const typeValidator_1 = __importDefault(require("../utils/typeValidator"));
 const initializer_1 = __importDefault(require("../lib/initializer"));
 const logger_1 = __importDefault(require("../utils/logger"));
+const path_1 = __importDefault(require("path"));
 commander_1.default.version('0.0.1');
 commander_1.default
     .command('init')
@@ -31,7 +32,7 @@ commander_1.default
             message: "Select state type",
             choices: ["Stateless", "Stateful"]
         });
-        logger_1.default.info("project will be created at", `${process.cwd()}/${projectName}`, `with ${answer.projectType} type`);
+        logger_1.default.info("project will be created at", `${path_1.default.join(process.cwd(), projectName)}`, `with ${answer.projectType} type`);
         initializer_1.default(projectName);
     }
     catch (err) {
